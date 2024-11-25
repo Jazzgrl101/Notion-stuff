@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stylish Kitchen Unit Converter Widget</title>
+    <style>
+        /* CSS Styling */
+
+        :root {
+            --primary-color: #4CAF50;
+            --secondary-color: #ffffff;
+            --background-color: #f0f0f0;
+            --border-radius: 10px;
+            --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            --transition-speed: 0.3s;
+            --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--background-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .converter-widget {
+            background-color: var(--secondary-color);
+            padding: 20px 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            width: 350px;
+            max-width: 90%;
+            transition: transform var(--transition-speed);
+        }
+
+        .converter-widget:hover {
+            transform: translateY(-5px);
+        }
+
+        .converter-widget h2 {
+            text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .converter-widget .form-group {
+            margin-bottom: 15px;
+        }
+
+        .converter-widget label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .converter-widget select,
+        .converter-widget input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: var(--border-radius);
+            box-sizing: border-box;
+            transition: border-color var(--transition-speed);
+            font-size: 14px;
+        }
+
+        .converter-widget select:focus,
+        .converter-widget input:focus {
+            border-color: var(--primary-color);
+            outline: none;
+        }
+
+        .converter-widget button {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--primary-color);
+            border: none;
+            border-radius: var(--border-radius);
+            color: var(--secondary-color);
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color var(--transition-speed);
+        }
+
+        .converter-widget button:hover {
+            background-color: #45a049;
+        }
+
+        .converter-widget .result {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e8f5e9;
+            border-left: 5px solid var(--primary-color);
+            border-radius: var(--border-radius);
+            font-size: 16px;
+            color: #333;
+            min-height: 40px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 400px) {
+            .converter-widget {
+                padding: 15px 20px;
+            }
+
+            .converter-widget h2 {
+                font-size: 20px;
+            }
+
+            .converter-widget button {
+                font-size: 14px;
+            }
+
+            .converter-widget .result {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="converter-widget">
+        <h2>Kitchen Unit Converter</h2>
+
+        <div class="form-group">
+            <label for="category">Category:</label>
+            <select id="category">
+                <option value="volume">Volume</option>
+                <option value="weight">Weight</option>
+                <option value="temperature">Temperature</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="from-unit">From:</label>
+            <select id="from-unit">
+                <!-- Options populated dynamically -->
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="to-unit">To:</label>
+            <select id="to-unit">
+                <!-- Options populated dynamically -->
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="input-value">Value:</label>
+            <input type="number" id="input-value" placeholder="Enter value" min="0" step="any">
+        </div>
+
+        <button id="convert-btn">Convert</button>
+
+        <div class="result" id="result">
+            <!-- Result displayed here -->
+        </div>
+    </div>
+
+    <script>
+        // JavaScript Functionality
+
+        // Define units for each category
+        const units = {
+            volume: [
+                { name: 'Teaspoons (tsp)', value: 'tsp' },
+                { name: 'Tablespoons (tbsp)', value: 'tbsp' },
+                { name: 'Cups', value: 'cups' },
+                { name: 'Milliliters (ml)', value: 'ml' },
+                { name: 'Liters (l)', value: 'l' },
+                { name: 'Pints', value: 'pints' },
+                { name: 'Quarts', value: 'quarts' },
+                { name: 'Gallons', value: 'gallons' }
+            ],
+            weight: [
+                { name: 'Grams (g)', value: 'g' },
+                { name: 'Kilograms (kg)', value: 'kg' },
+                { name: 'Ounces (oz)', value: 'oz' },
+                { name: 'Pounds (lb)', value: 'lb' }
+            ],
+            temperature: [
+                { name: 'Celsius (°C)', value: 'celsius' },
+                { name: 'Fahrenheit (°F)', value: 'fahrenheit' }
+            ]
+        };
+
+        // DOM Elements
+        const categorySelect = document.getElementById('category');
+        const fromUnitSelect = document.getElementById('from-unit');
+        const toUnitSelect = document.getElementById('to-unit');
+        const convertBtn = document.getElementById('convert-btn');
+        const resultDiv = document.getElementById('result');
+        const inputValue = document.getElementById('input-value');
+
+        // Populate units based on selected category
+        function populateUnits() {
+            const category = categorySelect.value;
+            const unitList = units[category];
+
+            // Clear existing options
+            fromUnitSelect.innerHTML = '';
+            toUnitSelect.innerHTML = '';
+
+            // Populate 'From' and 'To' unit selects
+            unitList.forEach(unit => {
+                const option1 = document.createElement('option');
+                option1.value = unit.value;
+                option1.text = unit.name;
+                fromUnitSelect.appendChild(option1);
+
+                const option2 = document.createElement('option');
+                option2.value = unit.value;
+                option2.text = unit.name;
+                toUnitSelect.appendChild(option2);
+            });
+        }
+
+        // Initial population
+        populateUnits();
+
+        // Update units when category changes
+        categorySelect.addEventListener('change', populateUnits);
+
+        // Conversion factors
+        const volumeFactors = {
+            tsp: 4.92892,
+            tbsp: 14.7868,
+            cups: 236.588,
+            ml: 1,
+            l: 1000,
+            pints: 473.176,
+            quarts: 946.353,
+            gallons: 3785.41
+        };
+
+        const weightFactors = {
+            g: 1,
+            kg: 1000,
+            oz: 28.3495,
+            lb: 453.592
+        };
+
+        // Conversion functions
+        function convertVolume(from, to, value) {
+            const valueInMl = value * volumeFactors[from];
+            const convertedValue = valueInMl / volumeFactors[to];
+            return convertedValue.toFixed(4);
+        }
+
+        function convertWeight(from, to, value) {
+            const valueInG = value * weightFactors[from];
+            const convertedValue = valueInG / weightFactors[to];
+            return convertedValue.toFixed(4);
+        }
+
+        function convertTemperature(from, to, value) {
+            if (from === to) return value.toFixed(2);
+            let converted;
+            if (from === 'celsius' && to === 'fahrenheit') {
+                converted = (value * 9/5) + 32;
+            } else if (from === 'fahrenheit' && to === 'celsius') {
+                converted = (value - 32) * 5/9;
+            } else {
+                return null; // Unsupported conversion
+            }
+            return converted.toFixed(2);
+        }
+
+        // Get unit name for display
+        function getUnitName(category, unitValue) {
+            const unit = units[category].find(u => u.value === unitValue);
+            return unit ? unit.name : '';
+        }
+
+        // Handle conversion on button click
+        convertBtn.addEventListener('click', () => {
+            const category = categorySelect.value;
+            const fromUnit = fromUnitSelect.value;
+            const toUnit = toUnitSelect.value;
+            const value = parseFloat(inputValue.value);
+
+            if (isNaN(value)) {
+                resultDiv.innerText = "Please enter a valid number.";
+                return;
+            }
+
+            let result;
+
+            if (category === 'volume') {
+                result = convertVolume(fromUnit, toUnit, value);
+            } else if (category === 'weight') {
+                result = convertWeight(fromUnit, toUnit, value);
+            } else if (category === 'temperature') {
+                result = convertTemperature(fromUnit, toUnit, value);
+            }
+
+            if (result !== null) {
+                resultDiv.innerText = `${value} ${getUnitName(category, fromUnit)} = ${result} ${getUnitName(category, toUnit)}`;
+            } else {
+                resultDiv.innerText = "Conversion not possible.";
+            }
+        });
+
+        // Optional: Trigger conversion on Enter key press
+        inputValue.addEventListener('keyup', (event) => {
+            if (event.key === 'Enter') {
+                convertBtn.click();
+            }
+        });
+    </script>
+
+</body>
+</html>
