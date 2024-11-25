@@ -4,17 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Stylish Kitchen Unit Converter Widget</title>
+    <!-- Google Fonts for Serif Header -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
     <style>
         /* CSS Styling */
 
         :root {
-            --primary-color: #44805f;
-            --secondary-color: #ffffff;
-            --background-color: #f0f0f0;
+            --primary-color: #448361; /* Updated to #448361 */
+            --accent-color: #448361; /* Updated to #448361 */
+            --secondary-color: #ffffff; /* White background for the widget */
+            --background-color: #ffffff; /* White page background */
             --border-radius: 10px;
             --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             --transition-speed: 0.3s;
-            --font-family: 'Playfair Display', serif;, Tahoma, Geneva, Verdana, sans-serif;
+            --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            --header-font: 'Playfair Display', serif; /* Serif font for header */
         }
 
         body {
@@ -23,8 +27,9 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 125vh;
+            height: 105vh;
             margin: 0;
+            /* Removed background-image for a clean white background */
         }
 
         .converter-widget {
@@ -44,6 +49,8 @@
         .converter-widget h2 {
             text-align: center;
             color: var(--primary-color);
+            font-family: var(--header-font); /* Applied serif font to header */
+            font-size: 24px; /* Adjusted font size */
             margin-bottom: 20px;
         }
 
@@ -73,6 +80,7 @@
         .converter-widget input:focus {
             border-color: var(--primary-color);
             outline: none;
+            box-shadow: 0 0 5px rgba(68, 131, 97, 0.5); /* Matching #448361 */
         }
 
         .converter-widget button {
@@ -85,6 +93,7 @@
             font-size: 16px;
             cursor: pointer;
             transition: background-color var(--transition-speed);
+            font-family: var(--font-family);
         }
 
         .converter-widget button:hover {
