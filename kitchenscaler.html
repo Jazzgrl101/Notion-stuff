@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rustic Cottagecore Recipe Ingredient Scaler</title>
+    <!-- Google Fonts for Cottagecore Aesthetic -->
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        /* CSS Styling */
+
+        :root {
+            --primary-color: #8D8741; /* Muted Olive Green */
+            --secondary-color: #C9CBA3; /* Soft Sage */
+            --accent-color: #FFE8D6; /* Creamy Beige */
+            --text-color: #4B3621; /* Dark Brown */
+            --background-color: #F5F3E5; /* Light Ivory */
+            --border-radius: 12px;
+            --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --transition-speed: 0.3s;
+            --font-family-serif: 'Playfair Display', serif;
+            --font-family-sans: 'Roboto', sans-serif;
+            --font-family-script: 'Great Vibes', cursive;
+        }
+
+        body {
+            font-family: var(--font-family-sans);
+            background-color: var(--background-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-image: url('https://www.transparenttextures.com/patterns/old-map.png'); /* Subtle Texture */
+            background-size: cover;
+        }
+
+        .scaler-widget {
+            background-color: var(--accent-color);
+            padding: 30px 40px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            width: 500px;
+            max-width: 95%;
+            transition: transform var(--transition-speed);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .scaler-widget::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            width: 120px;
+            height: 120px;
+            background: url('https://www.transparenttextures.com/patterns/floral.png') no-repeat center center;
+            background-size: cover;
+            opacity: 0.1;
+        }
+
+        .scaler-widget h2 {
+            text-align: center;
+            color: var(--primary-color);
+            font-family: var(--font-family-script);
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            color: var(--text-color);
+            font-weight: 500;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #B5B5B5;
+            border-radius: var(--border-radius);
+            box-sizing: border-box;
+            transition: border-color var(--transition-speed);
+            font-size: 15px;
+            background-color: #FFFFFF;
+            font-family: var(--font-family-sans);
+        }
+
+        .form-group input:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 5px rgba(141, 135, 65, 0.5);
+        }
+
+        .ingredient-list {
+            margin-top: 20px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .ingredient-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #FFFFFF;
+            padding: 10px 15px;
+            border: 1px solid #B5B5B5;
+            border-radius: var(--border-radius);
+            margin-bottom: 10px;
+            transition: background-color var(--transition-speed);
+        }
+
+        .ingredient-item:hover {
+            background-color: #F0F0F0;
+        }
+
+        .ingredient-details {
+            flex-grow: 1;
+        }
+
+        .ingredient-details span {
+            display: block;
+            color: var(--text-color);
+            font-size: 15px;
+            font-family: var(--font-family-serif);
+        }
+
+        .remove-btn {
+            background-color: #E57373;
+            border: none;
+            color: #FFFFFF;
+            padding: 6px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color var(--transition-speed);
+            font-size: 14px;
+            margin-left: 10px;
+        }
+
+        .remove-btn:hover {
+            background-color: #D32F2F;
+        }
+
+        .add-ingredient-btn,
+        .scale-btn,
+        .reset-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--primary-color);
+            border: none;
+            border-radius: var(--border-radius);
+            color: #FFFFFF;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color var(--transition-speed), transform var(--transition-speed);
+            font-family: var(--font-family-sans);
+            margin-top: 10px;
+        }
+
+        .add-ingredient-btn:hover,
+        .scale-btn:hover,
+        .reset-btn:hover {
+            background-color: #A0A54A;
+            transform: translateY(-2px);
+        }
+
+        .result-section {
+            margin-top: 25px;
+            padding: 15px;
+            background-color: #E8F5E9;
+            border-left: 5px solid var(--primary-color);
+            border-radius: var(--border-radius);
+            font-size: 16px;
+            color: var(--text-color);
+            min-height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-family-serif);
+        }
+
+        /* Decorative Floral Icons */
+        .scaler-widget .floral-top-left {
+            position: absolute;
+            top: 20px;
+            left: 15px;
+            width: 50px;
+            height: 50px;
+            background: url('https://www.transparenttextures.com/patterns/floral.png') no-repeat center center;
+            background-size: contain;
+            opacity: 0.2;
+        }
+
+        .scaler-widget .floral-bottom-right {
+            position: absolute;
+            bottom: 20px;
+            right: 15px;
+            width: 50px;
+            height: 50px;
+            background: url('https://www.transparenttextures.com/patterns/floral.png') no-repeat center center;
+            background-size: contain;
+            opacity: 0.2;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            .scaler-widget {
+                padding: 25px 30px;
+            }
+
+            .scaler-widget h2 {
+                font-size: 24px;
+            }
+
+            .ingredient-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .remove-btn {
+                margin-top: 8px;
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="scaler-widget">
+        <div class="floral-top-left"></div>
+        <div class="floral-bottom-right"></div>
+        <h2>Recipe Ingredient Scaler</h2>
+
+        <div class="form-group">
+            <label for="original-servings">Original Servings:</label>
+            <input type="number" id="original-servings" placeholder="Enter original number of servings" min="1" value="1">
+        </div>
+
+        <div class="form-group">
+            <label for="desired-servings">Desired Servings:</label>
+            <input type="number" id="desired-servings" placeholder="Enter desired number of servings" min="1" value="1">
+        </div>
+
+        <div class="ingredient-list" id="ingredient-list">
+            <!-- Ingredient items will be added here -->
+        </div>
+
+        <button class="add-ingredient-btn" id="add-ingredient-btn">Add Ingredient</button>
+        <button class="scale-btn" id="scale-btn">Scale Ingredients</button>
+        <button class="reset-btn" id="reset-btn">Reset</button>
+
+        <div class="result-section" id="result-section">
+            <!-- Scaled ingredients will be displayed here -->
+        </div>
+    </div>
+
+    <script>
+        // JavaScript Functionality
+
+        // DOM Elements
+        const addIngredientBtn = document.getElementById('add-ingredient-btn');
+        const ingredientList = document.getElementById('ingredient-list');
+        const scaleBtn = document.getElementById('scale-btn');
+        const resetBtn = document.getElementById('reset-btn');
+        const resultSection = document.getElementById('result-section');
+        const originalServingsInput = document.getElementById('original-servings');
+        const desiredServingsInput = document.getElementById('desired-servings');
+
+        // Function to add a new ingredient row
+        function addIngredient(name = '', quantity = '') {
+            const ingredientItem = document.createElement('div');
+            ingredientItem.className = 'ingredient-item';
+
+            const detailsDiv = document.createElement('div');
+            detailsDiv.className = 'ingredient-details';
+
+            const nameInput = document.createElement('input');
+            nameInput.type = 'text';
+            nameInput.placeholder = 'Ingredient Name';
+            nameInput.value = name;
+
+            const quantityInput = document.createElement('input');
+            quantityInput.type = 'number';
+            quantityInput.placeholder = 'Quantity';
+            quantityInput.min = '0';
+            quantityInput.step = 'any';
+            quantityInput.value = quantity;
+
+            detailsDiv.appendChild(nameInput);
+            detailsDiv.appendChild(quantityInput);
+
+            const removeBtn = document.createElement('button');
+            removeBtn.className = 'remove-btn';
+            removeBtn.innerText = 'Remove';
+            removeBtn.onclick = () => {
+                ingredientList.removeChild(ingredientItem);
+            };
+
+            ingredientItem.appendChild(detailsDiv);
+            ingredientItem.appendChild(removeBtn);
+
+            ingredientList.appendChild(ingredientItem);
+        }
+
+        // Add initial ingredient row
+        addIngredient();
+
+        // Event Listener to add new ingredient
+        addIngredientBtn.addEventListener('click', () => {
+            addIngredient();
+        });
+
+        // Function to scale ingredients
+        function scaleIngredients() {
+            const originalServings = parseFloat(originalServingsInput.value);
+            const desiredServings = parseFloat(desiredServingsInput.value);
+
+            if (isNaN(originalServings) || originalServings <= 0) {
+                alert("Please enter a valid original number of servings.");
+                return;
+            }
+
+            if (isNaN(desiredServings) || desiredServings <= 0) {
+                alert("Please enter a valid desired number of servings.");
+                return;
+            }
+
+            const scalingFactor = desiredServings / originalServings;
+
+            const ingredients = [];
+            const ingredientItems = ingredientList.getElementsByClassName('ingredient-item');
+
+            for (let item of ingredientItems) {
+                const inputs = item.getElementsByTagName('input');
+                const name = inputs[0].value.trim();
+                const quantity = parseFloat(inputs[1].value);
+
+                if (name === '' || isNaN(quantity) || quantity <= 0) {
+                    continue; // Skip invalid entries
+                }
+
+                const scaledQuantity = (quantity * scalingFactor).toFixed(2);
+                ingredients.push(`${scaledQuantity} - ${name}`);
+            }
+
+            if (ingredients.length === 0) {
+                resultSection.innerText = "No valid ingredients to display.";
+                return;
+            }
+
+            resultSection.innerHTML = `
+                <strong>Scaled Ingredients for ${desiredServings} Servings:</strong>
+                <ul style="list-style: disc; padding-left: 20px; margin-top: 10px;">
+                    ${ingredients.map(ing => `<li>${ing}</li>`).join('')}
+                </ul>
+            `;
+        }
+
+        // Event Listener to scale ingredients
+        scaleBtn.addEventListener('click', () => {
+            scaleIngredients();
+        });
+
+        // Function to reset the scaler
+        function resetScaler() {
+            originalServingsInput.value = 1;
+            desiredServingsInput.value = 1;
+            ingredientList.innerHTML = '';
+            addIngredient();
+            resultSection.innerHTML = '';
+        }
+
+        // Event Listener to reset scaler
+        resetBtn.addEventListener('click', () => {
+            resetScaler();
+        });
+
+        // Optional: Trigger scaling on Enter key press in desired servings
+        desiredServingsInput.addEventListener('keyup', (event) => {
+            if (event.key === 'Enter') {
+                scaleIngredients();
+            }
+        });
+    </script>
+
+</body>
+</html>
