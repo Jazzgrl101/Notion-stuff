@@ -389,11 +389,11 @@ body
             </div>
             <div id="player-content">
                 <div id="album-art">
-                    <img src="https://jazzgrl101.github.io/Notion-stuff/sayitrite.jpg" class="active" id="_1">
-                    <img src="https://jazzgrl101.github.io/Notion-stuff/sabrina%20espresso.jpg" id="_2">
-                    <img src="https://raw.githubusercontent.com/himalayasingh/music-player-1/master/img/_3.jpg" id="_3">
-                    <img src="https://raw.githubusercontent.com/himalayasingh/music-player-1/master/img/_4.jpg" id="_4">
-                    <img src="https://raw.githubusercontent.com/himalayasingh/music-player-1/master/img/_5.jpg" id="_5">
+                    <img src="https://jazzgrl101.github.io/Notion-stuff/Pinkhearts.jpg" class="active" id="_1">
+                    <img src="https://jazzgrl101.github.io/Notion-stuff/artworks-sQ8O6jlNtE3N-0-t500x500.jpg" id="_2">
+                    <img src="https://jazzgrl101.github.io/Notion-stuff/60_songs_boy_is_mine_atlantic_records_ringer.0.jpeg" id="_3">
+                    <img src="https://jazzgrl101.github.io/Notion-stuff/sayitrite.jpg" id="_4">
+                    <img src="https://jazzgrl101.github.io/Notion-stuff/Kidlaroigirls.jpeg" id="_5">
                     <div id="buffer-box">Buffering ...</div>
                 </div>
                 <div id="player-controls">
@@ -424,7 +424,7 @@ body
   <script type="text/javascript">
     $(function()
 {
-    var playerTrack = $("#player-track"), bgArtwork = $('#bg-artwork'), bgArtworkUrl, albumName = $('#album-name'), trackName = $('#track-name'), albumArt = $('#album-art'), sArea = $('#s-area'), seekBar = $('#seek-bar'), trackTime = $('#track-time'), insTime = $('#ins-time'), sHover = $('#s-hover'), playPauseButton = $("#play-pause-button"),  i = playPauseButton.find('i'), tProgress = $('#current-time'), tTime = $('#track-length'), seekT, seekLoc, seekBarPos, cM, ctMinutes, ctSeconds, curMinutes, curSeconds, durMinutes, durSeconds, playProgress, bTime, nTime = 0, buffInterval = null, tFlag = false, albums = ['Say it right x Circus','Me & You','Electro Boy','Home','Proxy (Original Mix)'], trackNames = ['Nelly Furtado x Britney Spears','Alex Skrindo - Me & You','Kaaze - Electro Boy','Jordan Schor - Home','Martin Garrix - Proxy'], albumArtworks = ['_1','_2','_3','_4','_5'], trackUrl = ['https://jazzgrl101.github.io/Notion-stuff/Say%20it%20right%20x%20Circus%20(mashup)%20-%20nelly%20furtado,%20britney%20spears.mp3','https://raw.githubusercontent.com/himalayasingh/music-player-1/master/music/1.mp3','https://raw.githubusercontent.com/himalayasingh/music-player-1/master/music/3.mp3','https://raw.githubusercontent.com/himalayasingh/music-player-1/master/music/4.mp3','https://raw.githubusercontent.com/himalayasingh/music-player-1/master/music/5.mp3'], playPreviousTrackButton = $('#play-previous'), playNextTrackButton = $('#play-next'), currIndex = -1;
+    var playerTrack = $("#player-track"), bgArtwork = $('#bg-artwork'), bgArtworkUrl, albumName = $('#album-name'), trackName = $('#track-name'), albumArt = $('#album-art'), sArea = $('#s-area'), seekBar = $('#seek-bar'), trackTime = $('#track-time'), insTime = $('#ins-time'), sHover = $('#s-hover'), playPauseButton = $("#play-pause-button"),  i = playPauseButton.find('i'), tProgress = $('#current-time'), tTime = $('#track-length'), seekT, seekLoc, seekBarPos, cM, ctMinutes, ctSeconds, curMinutes, curSeconds, durMinutes, durSeconds, playProgress, bTime, nTime = 0, buffInterval = null, tFlag = false, albums = ['Say it right x Circus','Step up blackout','The boy is mine','2 On -Me & U','Girls'], trackNames = ['Nelly Furtado x Britney Spears','Ariana Grande','Brandy x Monica ','Tinashe x Cassie','Kid Laroi'], albumArtworks = ['_1','_2','_3','_4','_5'], trackUrl = ['https://jazzgrl101.github.io/Notion-stuff/Say%20it%20right%20x%20Circus%20(mashup)%20-%20nelly%20furtado,%20britney%20spears.mp3','https://jazzgrl101.github.io/Notion-stuff/Ariana%20Grande%20-%20Step%20On%20Up%20(Blackout%20Version)-mc%20(1).mp3','https://jazzgrl101.github.io/Notion-stuff/Brandy%20&%20Monica%20-%20The%20Boy%20Is%20Mine%20(Official%20Video)_HIGH-mc.mp3','https://jazzgrl101.github.io/Notion-stuff/Tinashe,%20Cassie%20-%202%20On-Me%20&%20U%20(Mashup)-mc.mp3','https://jazzgrl101.github.io/Notion-stuff/The%20Kid%20LAROI%20-%20GIRLS%20(Official%20Video)-mc.mp3'], playPreviousTrackButton = $('#play-previous'), playNextTrackButton = $('#play-next'), currIndex = -1;
 
     function playPause()
     {
